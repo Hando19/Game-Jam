@@ -1,0 +1,21 @@
+{
+    "name": "GameJam2024",
+    "build": { "dockerfile": "dockerfile.yml" },
+  
+    "forwardPorts": [8888],
+  
+    "hostRequirements": {
+        "cpus": 4,
+        "memory": "16gb",
+        "storage": "32gb"
+    },
+  
+    "customizations": {
+        "vscode": {
+            "extensions": [
+              "ms-python.python",
+              "ms-azuretools.vscode-docker"
+              ]
+            }
+    }
+  } 
