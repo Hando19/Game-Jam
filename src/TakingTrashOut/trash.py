@@ -5,6 +5,10 @@ import random
 from setup.game_setup import black, white, gray, red, dark_gray, screen_height, screen_width, screen
 from setup.player import player_image, player_speed
 
+# Initialize Pygame font
+pygame.font.init()
+font = pygame.font.SysFont(None, 36)
+
 # Initialize game entities and state
 def init_game():
     global player_rect, objects, bullets, collision_count
@@ -22,10 +26,6 @@ def init_game():
                 break
     bullets = []  # List to hold bullets
     collision_count = 0  # Reset collision counter
-
-# Initialize Pygame font
-pygame.font.init()
-font = pygame.font.SysFont(None, 36)
 
 # Function to add bullets
 def add_bullet():

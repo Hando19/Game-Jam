@@ -2,7 +2,7 @@ import pygame
 from classes.coin import Coin
 from setup.player import player_image
 
-player_size = 50;
+player_size = 50
 
 coins = [
     Coin((415, 200)),
