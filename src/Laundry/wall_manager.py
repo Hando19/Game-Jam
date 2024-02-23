@@ -17,7 +17,10 @@ walls = [
     create_wall(0, 600 - wall_dimentions, 800, wall_dimentions),  
 
     # Left wall
-    create_wall(0, 0, wall_dimentions, 600),  
+    create_wall(0, 0, wall_dimentions, 600),
+
+    # Right wall
+    create_wall(800 - wall_dimentions, 0, wall_dimentions, 600),  
     
     #right wall from starting area
     create_wall(125, 50, wall_dimentions, 200), 
@@ -33,7 +36,7 @@ walls = [
     create_wall(450, 115, wall_dimentions, 150),
 
     #exist corner
-    create_wall(600, 115, 125, wall_dimentions, ),
+    create_wall(600, 115, 90, wall_dimentions, ),
     create_wall(600, 50, wall_dimentions, 400, ),
 
     create_wall(400, 325, 200, wall_dimentions),

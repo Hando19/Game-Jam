@@ -6,7 +6,8 @@ player_size = 50;
 
 coins = [
     Coin((415, 200)),
-    Coin((88, 510))
+    Coin((88, 510)),
+    Coin((490, 430))
 ]
 
 def find_nearest_safe_position(coin_pos, walls):
