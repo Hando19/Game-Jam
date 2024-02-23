@@ -3,11 +3,11 @@ import sys
 
 from setup.game_setup import screen, black, gray
 from setup.player import player_speed, player_image
-from Laundry.wall_manager import walls
-from Laundry.projectile_manager import projectiles
-from Laundry.coin_manager import coins, find_nearest_safe_position
+from HouseCleaning.wall_manager import walls, draw_walls
+from HouseCleaning.projectile_manager import projectiles
+from HouseCleaning.coin_manager import coins, find_nearest_safe_position
 
-def laundry_level():
+def house_level():
     # Adjusted player spawn position
     player_start_pos = (75, 75)  # Define the player's starting position
     player_rect = player_image.get_rect(topleft=player_start_pos)
@@ -35,9 +35,7 @@ def laundry_level():
         if keys[pygame.K_DOWN]:
             player_rect_test.y += player_speed
 
-        # Draw walls
-        for wall in walls:
-            pygame.draw.rect(screen, gray, wall)  # Draw each wall
+        draw_walls(screen)
 
         # Collision detection with walls
         collision = False

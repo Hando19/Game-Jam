@@ -4,6 +4,9 @@ import pygame
 screen_width = 800
 screen_height = 600
 
+# A 1x1 wall would be 50 x 50
+wall_dimentions = 50
+
 # Colors
 black = (0, 0, 0)
 white = (255, 255, 255)
