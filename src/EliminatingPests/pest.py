@@ -3,7 +3,6 @@ import random
 
 from setup.game_setup import black, white, red, yellow, gray, screen_height, screen_width, screen
 from setup.player import player_speed, player_image
-from screens.end import end_screen
 
 # Initialize Pygame font
 pygame.font.init()
@@ -58,8 +57,9 @@ def add_enemy_bullet():
     enemy_bullets.append((bullet_rect_right, bullet_velocity_right))
 
 def pest_level():
-    global collision_count
-
+    global collision_count, running
+    running = True
+    collision_count = 0
     init_game()
 
     # Floor properties
@@ -67,8 +67,6 @@ def pest_level():
     floor_color = gray
     floor_rect = pygame.Rect(0, screen_height - floor_height, screen_width, floor_height)
 
-    # Game loop flag
-    running = True
     player_bullet_timer = 0
     enemy_bullet_timer = 0
     bullet_interval = 110  # Frames until a new bullet is added
@@ -124,7 +122,14 @@ def pest_level():
 
         # Check if all red blocks are hit
         if len(objects) == 0:
-            end_screen()
+            # Display win state
+            font_win = pygame.font.SysFont(None, 72)
+            win_text = font_win.render("You Win!", True, white)
+            screen.blit(win_text, (screen_width // 2 - win_text.get_width() // 2, screen_height // 2 - win_text.get_height() // 2))
+            pygame.display.flip()
+            pygame.time.delay(2000)  # Delay for 2 seconds before quitting
+            
+            running = False
 
         # Update enemy bullets
         for bullet, velocity in enemy_bullets[:]:
@@ -132,9 +137,12 @@ def pest_level():
             bullet.y += velocity[1]  # Update y-coordinate
             if bullet.x < 0 or bullet.y > screen_height:
                 enemy_bullets.remove((bullet, velocity))
+
             # Check collision with player
             if bullet.colliderect(player_rect):
+                pygame.time.delay(500)
                 init_game()  # Reset game if player is hit
+                break
 
         # Fill the screen with black
         screen.fill(black)
