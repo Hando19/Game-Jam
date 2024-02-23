@@ -20,21 +20,17 @@ walls = [
     create_wall(125, 450, wall_dimentions, 150),
 
     #downward facing c 
-    create_wall(240, 115, wall_dimentions, 370),
-
-    #test wall
-    create_wall(125, 50, wall_dimentions, 50),
-
-    create_wall(265, 107, 200, wall_dimentions),
-    create_wall(450, 115, wall_dimentions, 150),
+    create_wall(250, 115, wall_dimentions, 380),
+    create_wall(450, 115, wall_dimentions, 160),
+    create_wall(250, 107, 250, wall_dimentions),
 
     #exist corner
-    create_wall(600, 115, 90, wall_dimentions, ),
-    create_wall(600, 50, wall_dimentions, 400, ),
+    create_wall(600, 115, 100, wall_dimentions),
+    create_wall(600, 50, wall_dimentions, 400),
 
+    #middle ish coin corner
+    create_wall(400, 330, wall_dimentions, 150),
     create_wall(400, 325, 200, wall_dimentions),
-
-    create_wall(400, 340, wall_dimentions, 150),
 
     # Top wall
     create_wall(0, 0, screen_width, wall_dimentions), 
@@ -54,13 +50,10 @@ def draw_walls(screen):
 
     for index, wall in enumerate(walls):
         # Determine which sprite to use based on the wall's index or other criteria
-        if index == 0 or index == 2 or index == 3:
-            wall_sprite = house_sprites.get_left_inner_wall()
-        elif index == 1:
-            wall_sprite = house_sprites.get_upper_inner_wall()
-        elif index == 4:
-            wall_sprite = house_sprites.get_test()
-
+        if index == 0 or index == 2 or index == 3 or index == 4 or index == 7 or index == 8:
+            wall_sprite = house_sprites.get_horizontal_inner_wall()
+        elif index == 1 or index == 5 or index == 6 or index == 9:
+            wall_sprite = house_sprites.get_vertical_inner_wall()
         elif index == len(walls)-4:
             wall_sprite = house_sprites.get_bottom_roof()
         elif index == len(walls)-3:

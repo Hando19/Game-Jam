@@ -35,36 +35,19 @@ class HouseSprites:
     def get_right_roof(self):
         return pygame.transform.rotate(self.get_bottom_roof(), 90)
 
-    #inner house corners
-    def get_upper_right_corner(self):
-        return self.get_sprite(1, 1, 18, 18)
-
-    def get_upper_left_corner(self):
-        return pygame.transform.rotate(self.get_upper_right_corner(), 90)
-
-    def get_bottom_left_corner(self):
-        return pygame.transform.rotate(self.get_upper_right_corner(), 180)
-
-    def get_bottom_right_corner(self):
-        return pygame.transform.rotate(self.get_upper_right_corner(), 270)
-
     #inner house walls
-    def get_right_inner_wall(self):
-        return self.get_sprite(2, 2, 13, 16)
-    
-    def get_upper_inner_wall(self):
-        return pygame.transform.rotate(self.get_right_inner_wall(), 90)
-
-    def get_left_inner_wall(self):
-        return pygame.transform.rotate(self.get_right_inner_wall(), 180)
-
-    def get_bottom_inner_wall(self):
-        return pygame.transform.rotate(self.get_right_inner_wall(), 270)
-    
-    #inner house walls
-    def get_test(self):
+    def get_vertical_inner_wall(self):
         return self.get_sprite(2, 2, 8, 8)
+    
+    def get_horizontal_inner_wall(self):
+        return pygame.transform.rotate(self.get_vertical_inner_wall(), 90)
     
     #flooring
     def get_floor(self):
         return self.get_sprite(2, 2, 10, 16)
+
+    def get_door(self):
+        return self.get_sprite(2, 2, 22, 10)
+
+    def get_test(self):
+        return self.get_sprite(2, 2, 22, 10)

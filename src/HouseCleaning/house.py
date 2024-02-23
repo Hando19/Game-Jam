@@ -6,13 +6,14 @@ from setup.player import player_speed, player_image
 from HouseCleaning.wall_manager import walls, draw_walls
 from HouseCleaning.projectile_manager import projectiles
 from HouseCleaning.coin_manager import coins, find_nearest_safe_position
+from classes.houseSprites import HouseSprites
 
 def house_level():
     # Adjusted player spawn position
     player_start_pos = (75, 75)  # Define the player's starting position
     player_rect = player_image.get_rect(topleft=player_start_pos)
 
-    next_level_block = pygame.Rect(660, 60, 30, 40) 
+    next_level_block = pygame.Rect(650, 60, 20, 40) 
     next_level_block_shown = False
 
     running = True
@@ -70,11 +71,11 @@ def house_level():
             next_level_block_shown = True
 
         if next_level_block_shown:
-            pygame.draw.rect(screen, (0, 255, 0), next_level_block)  
+            house_sprites = HouseSprites()
+            screen.blit(house_sprites.get_door(), next_level_block)
 
         if next_level_block_shown and player_rect.colliderect(next_level_block):
-            # Code to transition to the next level
-            print("Transition to the next level!")  
+            running = False 
 
         # Draw the player
         screen.blit(player_image, player_rect)
