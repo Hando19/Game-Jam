@@ -144,6 +144,16 @@ while running:
                 objects.remove(obj)
                 collision_count += 1  # Update the counter when a red block disappears
 
+    # Check if all red blocks are hit
+    if len(objects) == 0:
+        # Display win state
+        font_win = pygame.font.SysFont(None, 72)
+        win_text = font_win.render("You Win!", True, white)
+        screen.blit(win_text, (screen_width // 2 - win_text.get_width() // 2, screen_height // 2 - win_text.get_height() // 2))
+        pygame.display.flip()
+        pygame.time.delay(2000)  # Delay for 2 seconds before quitting
+        running = False
+
     # Update enemy bullets
     for bullet, velocity in enemy_bullets[:]:
         bullet.x += velocity[0]  # Update x-coordinate
