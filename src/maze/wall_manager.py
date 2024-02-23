@@ -1,40 +1,42 @@
 import pygame
-from setup.game_setup import screen_width, screen_height
 
 # Function to create walls
 def create_wall(x, y, width, height):
     """Creates a wall with the given parameters and returns the rect."""
     return pygame.Rect(x, y, width, height)
 
-# Wall width/height
-wall_height = 50
+# A 1x1 wall would be 50 x 50
+wall_dimentions = 50
 
 # Create walls
 walls = [ 
     # Top wall
-    create_wall(0, 0, screen_width, wall_height), 
+    create_wall(0, 0, 800, wall_dimentions), 
 
     # Bottom wall
-    create_wall(0, screen_height - wall_height, screen_width, wall_height),  
+    create_wall(0, 600 - wall_dimentions, 800, wall_dimentions),  
 
     # Left wall
-    create_wall(0, 0, wall_height, screen_height),  
+    create_wall(0, 0, wall_dimentions, 600),  
     
     #right wall from starting area
-    create_wall(125, 50, wall_height, 200), 
+    create_wall(125, 50, wall_dimentions, 200), 
 
     #bottom block from starting area
-    create_wall(50, 325, 200, wall_height),
+    create_wall(50, 325, 200, wall_dimentions),
 
-    create_wall(125, 450, wall_height, 150),
+    create_wall(125, 450, wall_dimentions, 150),
 
     #downward facing c 
-    create_wall(250, 115, wall_height, 260),
-    create_wall(250, 115, 200, wall_height),
-    create_wall(450, 115, wall_height, 150),
+    create_wall(250, 115, wall_dimentions, 370),
+    create_wall(250, 115, 200, wall_dimentions),
+    create_wall(450, 115, wall_dimentions, 150),
 
     #exist corner
-    create_wall(600, 115, 125, wall_height, ),
-    create_wall(600, 50, wall_height, 75, )
+    create_wall(600, 115, 125, wall_dimentions, ),
+    create_wall(600, 50, wall_dimentions, 400, ),
 
+    create_wall(400, 325, 200, wall_dimentions),
+
+    create_wall(400, 340, wall_dimentions, 150)
 ]
