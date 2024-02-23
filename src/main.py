@@ -1,6 +1,6 @@
 import pygame
-import sys
 
+from screens.intro import intro_screen
 from Laundry.laundry import laundry_level
 from TakingTrashOut.trash import trash_level
 from EliminatingPests.pest import pest_level
@@ -14,6 +14,8 @@ def main():
     pygame.display.set_caption("Platform Game")
 
     try:
+        intro_screen()
+        #trash_level()
         pest_level()
         end_screen()
     finally:
