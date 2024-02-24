@@ -14,8 +14,8 @@ def main():
     pygame.display.set_caption("Platform Game")
 
     try:
-        house_level()
-        #trash_level()
+        #house_level()
+        trash_level()
         #pest_level()
         #end_screen()
     finally:
