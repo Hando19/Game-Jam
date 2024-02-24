@@ -1,10 +1,10 @@
 import pygame
 
-from screens.intro import intro_screen
+#from screens.intro import intro_screen
 from HouseCleaning.house import house_level
-from TakingTrashOut.trash import trash_level
-from EliminatingPests.pest import pest_level
-from screens.end import end_screen
+#from TakingTrashOut.trash import trash_level
+#from EliminatingPests.pest import pest_level
+#from screens.end import end_screen
 
 def main(): 
     # Initialize Pygame

@@ -1,6 +1,5 @@
 import pygame
 from classes.broom import Broom
-from setup.player import player_image
 
 player_size = 50
 
