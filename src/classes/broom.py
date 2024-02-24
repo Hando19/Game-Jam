@@ -3,7 +3,7 @@ from setup.game_setup import broom_dimensions
 
 class Broom:
     def __init__(self, position):
-        self.img_path = 'src/assets/Broom.png'  # Path to your image file
+        self.img_path = 'src/assets/Broom.png'
         self.position = position
         self.collected = False
         self.rect = pygame.Rect(position[0], position[1], broom_dimensions, broom_dimensions)

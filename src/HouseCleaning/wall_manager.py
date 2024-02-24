@@ -33,9 +33,6 @@ walls = [
     create_wall(400, 330, wall_dimentions, 150),
     create_wall(400, 325, 200, wall_dimentions),
 
-    #test 
-    #create_wall(400, 250, 200, wall_dimentions),
-
     # Top wall
     create_wall(0, 0, screen_width, wall_dimentions), 
 
@@ -51,7 +48,6 @@ walls = [
 
 def draw_walls(screen):
     house_sprites = HouseSprites()
-    animal_sprites = AnimalSprites()
 
     for index, wall in enumerate(walls):
         # Determine which sprite to use based on the wall's index or other criteria
@@ -59,10 +55,6 @@ def draw_walls(screen):
             wall_sprite = house_sprites.get_horizontal_inner_wall()
         elif index == 1 or index == 5 or index == 6 or index == 9:
             wall_sprite = house_sprites.get_vertical_inner_wall()
-
-        #elif index == 10:
-        #    wall_sprite = animal_sprites.get_mouse_1()
-
         elif index == len(walls)-4:
             wall_sprite = house_sprites.get_bottom_roof()
         elif index == len(walls)-3:
