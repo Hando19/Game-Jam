@@ -1,6 +1,7 @@
 import pygame
 import sys
 from setup.game_setup import screen, screen_height, screen_width
+from setup.util_functions import prepare_background
 from HouseCleaning.wall_manager import walls, draw_walls
 from HouseCleaning.projectile_manager import projectiles
 from HouseCleaning.broom_manager import brooms, find_nearest_safe_position
@@ -13,18 +14,13 @@ def house_level():
 
     # Adjusted player spawn position
     player_start_pos = (75, 75)
-    player_rect = player.update_spawn_position((75, 75))
 
     next_level_block = pygame.Rect(650, 60, 20, 40) 
     next_level_block_shown = False
 
-    # Create a background surface
+    # Preparing background using single sprite
     background = pygame.Surface((screen_width, screen_height))
-
-    # Filling background with floor sprite
-    for x in range(0, screen_width, 50):
-        for y in range(0, screen_height, 50):
-            background.blit(house_sprites.get_floor(), (x, y))
+    background = prepare_background(background, house_sprites.get_floor())
 
     running = True
     while running:
@@ -46,6 +42,7 @@ def house_level():
         if not collision:
             player.update_hitbox_rect(proposed_move)
 
+        # Handling collisions with brooms
         for broom in brooms:
             if player.get_hitbox_rect().colliderect(broom.rect) and not broom.collected:
                 safe_pos = find_nearest_safe_position(broom.position, walls)
@@ -64,6 +61,7 @@ def house_level():
         for broom in brooms:
             broom.draw(screen)
         
+        # Showing exit door on all broom collection condition
         all_brooms_collected = all(broom.collected for broom in brooms)
         if all_brooms_collected and not next_level_block_shown:
             next_level_block_shown = True
@@ -74,7 +72,8 @@ def house_level():
         if next_level_block_shown and player.get_hitbox_rect().colliderect(next_level_block):
             running = False 
 
-        player.draw(screen)   # Draw the player sprite to the screen
+        # Draw the player sprite to the screen
+        player.draw(screen)  
 
         pygame.display.flip()  # Update the display
         pygame.time.Clock().tick(60)  # Cap the frame rate

@@ -48,7 +48,6 @@ walls = [
 
 def draw_walls(screen):
     house_sprites = HouseSprites()
-    animal_sprites = AnimalSprites()
 
     for index, wall in enumerate(walls):
         # Determine which sprite to use based on the wall's index or other criteria
