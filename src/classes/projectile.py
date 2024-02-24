@@ -1,5 +1,5 @@
 import pygame
-from setup.game_setup import red, projectile_dimentions
+from setup.game_setup import projectile_dimentions
 from classes.animalSprites import AnimalSprites
 
 class Projectile:
@@ -41,10 +41,7 @@ class Projectile:
     def draw(self, surface):
         animal_sprites = AnimalSprites()
 
-        # Draw the projectile
-        pygame.draw.rect(surface, self.color, self.rect)
-        
-        # Overlay the specific image
+        # Get the specific image based on direction
         if self.direction == "right":
             image = animal_sprites.get_mouse_right_face()
         elif self.direction == "left":
@@ -54,5 +51,4 @@ class Projectile:
         elif self.direction == "down":
             image = animal_sprites.get_mouse_downward_face()
         
-        # Draw the image on top of the projectile
         surface.blit(image, self.rect.topleft)
