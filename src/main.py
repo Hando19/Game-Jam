@@ -6,7 +6,7 @@ from TakingTrashOut.trash import trash_level
 from EliminatingPests.pest import pest_level
 from screens.end import end_screen
 
-def main():
+def main(): 
     # Initialize Pygame
     pygame.init()
 

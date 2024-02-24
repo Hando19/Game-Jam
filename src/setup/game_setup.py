@@ -7,6 +7,8 @@ screen_height = 600
 # A 1x1 wall would be 50 x 50
 wall_dimentions = 50
 
+projectile_dimentions = 20
+
 # Colors
 black = (0, 0, 0)
 white = (255, 255, 255)
