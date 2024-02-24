@@ -5,7 +5,7 @@ class Player:
     def __init__(self):
         # Load Player Sprite
         self.player_image_path = 'src/assets/PlayerAssets.png'
-        self.player_image = get_sprite(self.player_image_path, 1.5, 1.5, 60, 35, 50)
+        self.player_image = get_sprite(self.player_image_path, 1.5, 1.5, 60, 35, 50).convert_alpha()
         self.player_rect = self.player_image.get_rect(topleft=(75, 75))
         self.hitbox_padding = 10
         # Adjust the player_rect to create a tighter hitbox around the visible sprite
