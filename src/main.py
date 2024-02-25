@@ -3,6 +3,7 @@ import pygame
 #from screens.intro import intro_screen
 #from screens.house_cleaning import mouse_infestation_screen
 #from HouseCleaning.house import house_level
+from screens.trash_removal import trash_removal_screen
 from TakingTrashOut.trash import trash_level
 #from screens.pest_extermination import insect_destruction_screen
 #from EliminatingPests.pest import pest_level
@@ -19,6 +20,7 @@ def main():
         #intro_screen()
         #mouse_infestation_screen()
         #house_level()
+        trash_removal_screen()
         trash_level()
         #insect_destruction_screen()
         #pest_level()

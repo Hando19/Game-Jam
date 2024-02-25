@@ -1,9 +1,7 @@
 import pygame
 import sys
 import random
-
 from setup.game_setup import screen_height, screen_width, screen
-
 from setup.player import Player
 from classes.movableObject import MovableObject
 from HouseCleaning.projectile_manager import projectiles 
@@ -11,11 +9,6 @@ from classes.projectile import Projectile
 from setup.util_functions import prepare_background
 from classes.houseSprites import HouseSprites
 from TakingTrashOut.trash_bin_wall import bin_walls, draw_bins
-
-# Initialize Pygame and font
-pygame.init()
-pygame.font.init()
-font = pygame.font.SysFont(None, 36)
 
 # Declare global variables
 objects, bears, collision_count = [], [], 0
@@ -65,7 +58,6 @@ def add_bear():
     new_bear = Projectile(start_pos, selected_projectile.direction, selected_projectile.speed, selected_projectile.range)
     bears.append(new_bear)
 
-
 def trash_level():
     global player, collision_count, background
     init_game()
@@ -107,6 +99,10 @@ def trash_level():
                 objects.remove(obj)
                 collision_count += 1
 
+        #Ending game once all trash bags have been thrown away
+        if not objects:
+            running = False
+
         for bear in bears[:]:
             bear.update()
             if bear.distance_moved > bear.range or bear.rect.colliderect(pit_hitbox_rect):
@@ -132,12 +128,5 @@ def trash_level():
         for bear in bears:
             bear.draw_bear(screen)
 
-        # Display the score
-        score_surface = font.render(f'Score: {collision_count}', True, pygame.Color('white'))
-        screen.blit(score_surface, (10, 10))
-
         pygame.display.flip()
         pygame.time.Clock().tick(60)
-
-if __name__ == '__main__':
-    trash_level()

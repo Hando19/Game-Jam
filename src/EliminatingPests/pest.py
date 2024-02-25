@@ -1,6 +1,5 @@
 import pygame
 import random
-
 from setup.game_setup import screen_height, screen_width, screen
 from setup.util_functions import prepare_background
 from classes.animalSprites import AnimalSprites
