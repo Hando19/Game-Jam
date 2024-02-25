@@ -3,7 +3,6 @@ import sys
 import random
 
 from setup.game_setup import black, white, gray, red, dark_gray, screen_height, screen_width, screen, wall_dimentions
-#from setup.game_setup import screen, screen_height, screen_width
 
 from setup.player import Player
 from classes.movableObject import MovableObject
@@ -11,6 +10,8 @@ from HouseCleaning.projectile_manager import projectiles  # Assuming this is the
 from classes.projectile import Projectile
 from setup.util_functions import prepare_background
 from classes.houseSprites import HouseSprites
+
+
 
 
 

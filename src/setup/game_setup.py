@@ -11,6 +11,8 @@ projectile_dimentions = 20
 
 broom_dimensions = 30
 
+trashbin_dimensions = 10
+
 # Colors
 black = (0, 0, 0)
 white = (255, 255, 255)
