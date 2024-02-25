@@ -31,3 +31,9 @@ def prepare_background(background, single_sprite):
         for y in range(0, screen_height, 50):
             background.blit(single_sprite, (x, y))
     return background
+
+def get_scaled_image(img_path, scale):
+        full_image = pygame.image.load(img_path).convert_alpha()
+        scaled_image = pygame.transform.scale(full_image, (scale, scale))
+        
+        return scaled_image

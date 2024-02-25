@@ -1,19 +1,18 @@
 import pygame
 import random
 
-from setup.game_setup import black, white, red, yellow, gray, screen_height, screen_width, screen
+from setup.game_setup import screen_height, screen_width, screen
+from setup.util_functions import prepare_background, get_scaled_image
+from classes.animalSprites import AnimalSprites
 from setup.player import Player  
 from classes.projectile import Projectile
-
-# Initialize Pygame font
-pygame.font.init()
-font = pygame.font.SysFont(None, 36)
 
 # Bullet properties
 bullet_speed = 2
 bullet_radius = 4
 enemy_bullet_speed = 10
 MAX_ENEMY_BULLETS = 10
+animal_sprites = AnimalSprites()
 
 # Initialize game entities and state
 def init_game(player):
@@ -66,6 +65,12 @@ def pest_level():
     bullet_interval = 110
     enemy_bullet_interval = 30
 
+    # Preparing background using single sprite
+    background = pygame.Surface((screen_width, screen_height))
+    grass_image = 'src/assets/Grass.png'
+    grass_sprite = get_scaled_image(grass_image, 50)
+    background = prepare_background(background, grass_sprite)
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -89,7 +94,8 @@ def pest_level():
         player_bullet_timer += 1
         enemy_bullet_timer += 1
 
-        screen.fill(black)
+        # Blit the background surface to the screen at the start of each frame
+        screen.blit(background, (0, 0))
         
         for bullet in player_bullets + enemy_bullets:
             bullet.update()
@@ -101,7 +107,7 @@ def pest_level():
                     enemy_bullets.remove(bullet)
 
         for obj in objects:
-            pygame.draw.rect(screen, red, obj)
+            screen.blit(animal_sprites.get_insect_nest(), obj)
 
         player.draw(screen)
 
