@@ -5,11 +5,13 @@ from setup.util_functions import prepare_background
 from HouseCleaning.wall_manager import walls, draw_walls
 from HouseCleaning.projectile_manager import projectiles
 from HouseCleaning.broom_manager import brooms, find_nearest_safe_position
+from classes.animalSprites import AnimalSprites
 from classes.houseSprites import HouseSprites
 from setup.player import Player
 
 def house_level():
     house_sprites = HouseSprites()
+    animal_sprites = AnimalSprites()
     player = Player()
 
     # Adjusted player spawn position
@@ -52,7 +54,7 @@ def house_level():
         # Update and draw projectiles
         for projectile in projectiles:
             projectile.update()
-            projectile.draw(screen)
+            projectile.draw_mice(screen)
             
             if player.get_hitbox_rect().colliderect(projectile.rect):
                 player.update_spawn_position(player_start_pos) 

@@ -12,6 +12,7 @@ class Projectile:
         self.range = range
         self.color = (0, 0, 0, 0)
         self.distance_moved = 0  # Track how far the projectile has moved
+        self.animal_sprites = AnimalSprites()
     
     def update(self):
         """Move the projectile and reset it if it exceeds its range."""
@@ -38,17 +39,30 @@ class Projectile:
         self.rect.x, self.rect.y = self.original_start_pos
         self.distance_moved = 0
     
-    def draw(self, surface):
-        animal_sprites = AnimalSprites()
+    def draw_insect(self, surface):
 
         # Get the specific image based on direction
         if self.direction == "right":
-            image = animal_sprites.get_mouse_right_face()
+            image = self.animal_sprites.get_insect_right_face()
         elif self.direction == "left":
-            image = animal_sprites.get_mouse_left_face()
+            image = self.animal_sprites.get_insect_left_face()
         elif self.direction == "up":
-            image = animal_sprites.get_mouse_upward_face()
+            image = self.animal_sprites.get_insect_upward_face()
         elif self.direction == "down":
-            image = animal_sprites.get_mouse_downward_face()
+            image = self.animal_sprites.get_insect_downward_face()
+        
+        surface.blit(image, self.rect.topleft)
+
+    def draw_mice(self, surface):
+
+        # Get the specific image based on direction
+        if self.direction == "right":
+            image = self.animal_sprites.get_mouse_right_face()
+        elif self.direction == "left":
+            image = self.animal_sprites.get_mouse_left_face()
+        elif self.direction == "up":
+            image = self.animal_sprites.get_mouse_upward_face()
+        elif self.direction == "down":
+            image = self.animal_sprites.get_mouse_downward_face()
         
         surface.blit(image, self.rect.topleft)

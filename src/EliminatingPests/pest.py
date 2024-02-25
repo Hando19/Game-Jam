@@ -2,8 +2,9 @@ import pygame
 import random
 
 from setup.game_setup import screen_height, screen_width, screen
-from setup.util_functions import prepare_background, get_scaled_image
+from setup.util_functions import prepare_background
 from classes.animalSprites import AnimalSprites
+from classes.houseSprites import HouseSprites
 from setup.player import Player  
 from classes.projectile import Projectile
 
@@ -12,7 +13,9 @@ bullet_speed = 2
 bullet_radius = 4
 enemy_bullet_speed = 10
 MAX_ENEMY_BULLETS = 10
+player = Player()
 animal_sprites = AnimalSprites()
+house_sprites = HouseSprites()
 
 # Initialize game entities and state
 def init_game(player):
@@ -33,7 +36,7 @@ def add_enemy_bullet():
     if spawn_edge == 'top':
         x = random.randint(0, screen_width)
         y = 0
-        direction = "down"  # Assuming the projectile class can handle direction
+        direction = "down" 
     elif spawn_edge == 'right':
         x = screen_width
         y = random.randint(0, screen_height)
@@ -56,7 +59,6 @@ def add_enemy_bullet():
     enemy_bullets.append(new_bullet)
 
 def pest_level():
-    player = Player()
     init_game(player)
     
     running = True
@@ -67,9 +69,7 @@ def pest_level():
 
     # Preparing background using single sprite
     background = pygame.Surface((screen_width, screen_height))
-    grass_image = 'src/assets/Grass.png'
-    grass_sprite = get_scaled_image(grass_image, 50)
-    background = prepare_background(background, grass_sprite)
+    background = prepare_background(background, house_sprites.get_grass())
 
     while running:
         for event in pygame.event.get():
@@ -86,7 +86,6 @@ def pest_level():
             add_player_bullet(player)
             player_bullet_timer = 0
 
-
         if enemy_bullet_timer >= enemy_bullet_interval:
             add_enemy_bullet()
             enemy_bullet_timer = 0
@@ -99,7 +98,7 @@ def pest_level():
         
         for bullet in player_bullets + enemy_bullets:
             bullet.update()
-            bullet.draw(screen)
+            bullet.draw_insect(screen)
             if bullet.rect.x < 0 or bullet.rect.x > screen_width or bullet.rect.y > screen_height or bullet.rect.y < 0:
                 if bullet in player_bullets:
                     player_bullets.remove(bullet)
