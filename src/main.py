@@ -8,7 +8,8 @@ from TakingTrashOut.trash import trash_level
 from screens.pest_extermination import insect_destruction_screen
 from EliminatingPests.pest import pest_level
 from screens.end import end_screen
-
+#The game is run on pygame. You have to make sure you have both
+# Pygame and Python installed inorder to run the game.
 def main(): 
     # Initialize Pygame
     pygame.init()
