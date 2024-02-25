@@ -3,17 +3,38 @@ import sys
 import random
 
 from setup.game_setup import black, white, gray, red, dark_gray, screen_height, screen_width, screen, wall_dimentions
+#from setup.game_setup import screen, screen_height, screen_width
+
 from setup.player import Player
 from classes.movableObject import MovableObject
+from HouseCleaning.projectile_manager import projectiles  # Assuming this is the correct path for bear assets
+from classes.projectile import Projectile
+from setup.util_functions import prepare_background
+from classes.houseSprites import HouseSprites
 
-# Initialize Pygame font
+
+
+# Initialize Pygame and font
+pygame.init()
 pygame.font.init()
 font = pygame.font.SysFont(None, 36)
 
-# Initialize game entities and state
-def init_game(player):
-    global objects, bullets, collision_count
+# Declare global variables
+objects, bears, collision_count = [], [], 0
+player = None  # This will be initialized in trash_level()
+
+def init_game():
+
+    global objects, bears, collision_count, player, background
+
+    house_sprites = HouseSprites()
+    background = pygame.Surface((screen_width, screen_height))
+    background = prepare_background(background, house_sprites.get_floor())
+
+    player = Player()  # Reinitialize the player globally
     objects = []
+    bears = []
+    collision_count = 0
     num_objects = random.randint(3, 6)
     for _ in range(num_objects):
         x = random.randint(100, screen_width - 100)
@@ -23,108 +44,109 @@ def init_game(player):
             new_object.rect.x = random.randint(100, screen_width - 100)
             new_object.rect.y = random.randint(100, screen_height - 100)
         objects.append(new_object)
-    bullets = []
-    collision_count = 0
 
-# Function to add bullets
-def add_bullet():
-    y = random.randint(0, screen_height)
-    bullet_rect = pygame.Rect(screen_width, y, 10, 10)
-    bullets.append(bullet_rect)
+'''
+def add_bear():
+    global projectiles, bears
+    selected_projectile = random.choice(projectiles)
+    new_bear = Projectile(selected_projectile.start_pos, selected_projectile.direction, selected_projectile.speed, selected_projectile.range)
+    bears.append(new_bear)
+'''
+
+def add_bear():
+    global projectiles, bears
+    selected_projectile = random.choice(projectiles)
+    
+    # Determine the direction and set the starting position accordingly
+    if selected_projectile.direction == "right":
+        # Spawn on the left side, moving right
+        start_pos = (0, random.randint(0, screen_height))
+    elif selected_projectile.direction == "up":
+        # Spawn at the bottom, moving up
+        start_pos = (random.randint(0, screen_width), screen_height)
+    else:
+        # Default to spawning on the right side if direction is not "right" or "up"
+        # This handles cases where the direction might not be explicitly set to "left" or "down"
+        # Adjust this logic if you have specific needs for these directions
+        start_pos = (screen_width, random.randint(0, screen_height))
+
+    # Create a new Projectile with the adjusted starting position
+    new_bear = Projectile(start_pos, selected_projectile.direction, selected_projectile.speed, selected_projectile.range)
+    bears.append(new_bear)
+
 
 def trash_level():
-    global collision_count
-    collision_count = 0
-    player = Player()
-    init_game(player)
+    global player, collision_count, background
+    init_game()
 
-    # Bullet properties
-    bullet_speed = 12
+    bear_speed = 12
+    pit_rect = pygame.Rect(200, screen_height - wall_dimentions, 200, wall_dimentions)
+    pit_hitbox_rect = pygame.Rect(pit_rect.x, pit_rect.y, pit_rect.width, 10)
 
-    # Pit properties
-    pit_rect = pygame.Rect(200, screen_height - wall_dimentions, 200, wall_dimentions) 
-
-    # Pit hitbox properties (slightly above the pit, same length)
-    pit_hitbox_rect = pygame.Rect(pit_rect.x, pit_rect.y, pit_rect.width, 10) 
-
-    # Game loop flag
     running = True
-    bullet_timer = 0
-    bullet_interval = 60  # Frames until a new bullet is added
+    bear_timer = 0
+    bear_interval = 60
 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                pygame.quit()
                 sys.exit()
 
-        keys = pygame.key.get_pressed() 
+        keys = pygame.key.get_pressed()
         proposed_move = player.propose_move()
 
-        # Ensure player remains on screen and adjust for collisions
         proposed_move.x = max(0, min(screen_width - proposed_move.width, proposed_move.x))
         proposed_move.y = max(0, min(screen_height - proposed_move.height, proposed_move.y))
 
-        # Initialize collision flag
-        collision = False
+        player.update_hitbox_rect(proposed_move)
 
-        if not collision:
-            # If no wall collision, update the player position
-            player.update_hitbox_rect(proposed_move)
-
-        for obj in list(objects):  # Using list() to safely modify during iteration
+        for obj in list(objects):
             if proposed_move.colliderect(obj.rect):
-                dx = 0
-                dy = 0
+                dx = dy = 0
                 if keys[pygame.K_LEFT]: dx = -player.player_speed
                 if keys[pygame.K_RIGHT]: dx = player.player_speed
                 if keys[pygame.K_UP]: dy = -player.player_speed
                 if keys[pygame.K_DOWN]: dy = player.player_speed
 
-                # Calculate the object's new position
-                new_x = max(0, min(screen_width - obj.rect.width, obj.rect.x + dx))
-                new_y = max(0, min(screen_height - obj.rect.height, obj.rect.y + dy))
-                
-                # Update the object's position to the new location within bounds
-                obj.rect.x = new_x
-                obj.rect.y = new_y
-                    
-            # Check for collision with the pit hitbox and remove the object if collided
+                obj.rect.x = max(0, min(screen_width - obj.rect.width, obj.rect.x + dx))
+                obj.rect.y = max(0, min(screen_height - obj.rect.height, obj.rect.y + dy))
+
             if obj.rect.colliderect(pit_hitbox_rect):
                 objects.remove(obj)
                 collision_count += 1
-        
-        # Bullets logic 
-        for bullet in bullets[:]:
-            bullet.x -= bullet_speed
-            if bullet.x < 0:
-                bullets.remove(bullet)
-            # Check collision with player
-            if bullet.colliderect(player.get_hitbox_rect()):
-                init_game(player)  # Reset game if player is hit
 
-        bullet_timer += 1
-        if bullet_timer >= bullet_interval:
-            add_bullet()
-            bullet_timer = 0
+        for bear in bears[:]:
+            bear.update()
+            if bear.distance_moved > bear.range or bear.rect.colliderect(pit_hitbox_rect):
+                bears.remove(bear)
+            elif bear.rect.colliderect(player.get_hitbox_rect()):
+                init_game()  # Reset the game if the player is hit by a bear
 
-        # Drawing game elements
-        screen.fill(black)
+        bear_timer += 1
+        if bear_timer >= bear_interval:
+            add_bear()
+            bear_timer = 0
 
-        # Draw the floor, pit, player, and objects
+        # Draw the background first
+        screen.blit(background, (0, 0))
+
+        # Draw the rest of the game elements
         pygame.draw.rect(screen, dark_gray, (200, screen_height - 50, 200, 50))
-        player.draw(screen)  # Use Player's draw method
+        player.draw(screen)
 
-        # Drawing movable objects
         for obj in objects:
             obj.draw(screen)
         
-        # Draw bullets
-        for bullet in bullets:
-            pygame.draw.circle(screen, white, bullet.center, 5)
+        for bear in bears:
+            bear.draw(screen)
 
-        # Cap the frame rate
+        # Display the score
+        score_surface = font.render(f'Score: {collision_count}', True, pygame.Color('white'))
+        screen.blit(score_surface, (10, 10))
+
+        pygame.display.flip()
         pygame.time.Clock().tick(60)
 
-        # Update the display
-        pygame.display.flip()
-
+if __name__ == '__main__':
+    trash_level()
