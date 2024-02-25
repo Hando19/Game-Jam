@@ -14,14 +14,21 @@ def end_screen():
     game_over_text_rect = game_over_text.get_rect(center=(screen_width // 2, screen_height // 2 - 50))
     thanks_text_rect = thanks_text.get_rect(center=(screen_width // 2, screen_height // 2 + 50))
 
+    # Display time
+    display_time_ms = 5000 
+    start_ticks = pygame.time.get_ticks()
+
     # Game loop
     running = True
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            elif event.type == pygame.KEYDOWN:
-                running = False  # Exit the loop if any key is pressed
+
+        # Calculate elapsed time
+        elapsed_time_ms = pygame.time.get_ticks() - start_ticks
+        if elapsed_time_ms >= display_time_ms:
+            running = False
 
         # Fill the screen with black
         screen.fill(black)
