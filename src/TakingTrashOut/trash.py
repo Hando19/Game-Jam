@@ -13,11 +13,11 @@ from TakingTrashOut.trash_bin_wall import bin_walls, draw_bins
 # Declare global variables
 objects, bears, collision_count = [], [], 0
 player = None  # This will be initialized in trash_level()
+house_sprites = HouseSprites()
 
 def init_game():
     global objects, bears, collision_count, player, background
 
-    house_sprites = HouseSprites()
     # Preparing background using single sprite
     background = pygame.Surface((screen_width, screen_height))
     background = prepare_background(background, house_sprites.get_grass())
@@ -123,7 +123,7 @@ def trash_level():
         player.draw(screen)
 
         for obj in objects:
-            obj.draw(screen)
+            screen.blit(house_sprites.get_trash_bag(), obj)
         
         for bear in bears:
             bear.draw_bear(screen)
