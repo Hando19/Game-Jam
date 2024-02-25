@@ -14,7 +14,7 @@ def main():
     pygame.init()
 
     # Title
-    pygame.display.set_caption("Chores")
+    pygame.display.set_caption("Mr.Clean Fights Back")
 
     try:
         intro_screen()
