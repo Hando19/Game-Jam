@@ -6,6 +6,7 @@ class HouseSprites:
     def __init__(self):
         self.img_path = 'src/assets/HouseAssets.png'
         self.grass_img_path = 'src/assets/Grass.png'
+        self.trash_bin_img_path = 'src/assets/TrashBin.png'
 
     #outter house roofing
     def get_bottom_roof(self):
@@ -36,3 +37,6 @@ class HouseSprites:
 
     def get_grass(self):
         return get_scaled_image(self.grass_img_path, wall_dimentions)
+    
+    def get_trash_bin(self):
+        return get_scaled_image(self.trash_bin_img_path, wall_dimentions)

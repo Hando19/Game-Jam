@@ -6,14 +6,10 @@ from setup.game_setup import black, white, gray, red, dark_gray, screen_height, 
 
 from setup.player import Player
 from classes.movableObject import MovableObject
-from HouseCleaning.projectile_manager import projectiles  # Assuming this is the correct path for bear assets
+from HouseCleaning.projectile_manager import projectiles 
 from classes.projectile import Projectile
 from setup.util_functions import prepare_background
 from classes.houseSprites import HouseSprites
-
-
-
-
 
 # Initialize Pygame and font
 pygame.init()
@@ -25,12 +21,12 @@ objects, bears, collision_count = [], [], 0
 player = None  # This will be initialized in trash_level()
 
 def init_game():
-
     global objects, bears, collision_count, player, background
 
     house_sprites = HouseSprites()
+    # Preparing background using single sprite
     background = pygame.Surface((screen_width, screen_height))
-    background = prepare_background(background, house_sprites.get_floor())
+    background = prepare_background(background, house_sprites.get_grass())
 
     player = Player()  # Reinitialize the player globally
     objects = []
@@ -48,6 +44,7 @@ def init_game():
 
 def add_bear():
     global projectiles, bears
+
     selected_projectile = random.choice(projectiles)
     
     # Determine the direction and set the starting position accordingly
@@ -71,7 +68,7 @@ def add_bear():
 def trash_level():
     global player, collision_count, background
     init_game()
-
+    
     bear_speed = 12
     pit_rect = pygame.Rect(200, screen_height - wall_dimentions, 200, wall_dimentions)
     pit_hitbox_rect = pygame.Rect(pit_rect.x, pit_rect.y, pit_rect.width, 10)
