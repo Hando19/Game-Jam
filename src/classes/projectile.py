@@ -62,3 +62,16 @@ class Projectile:
             image = self.animal_sprites.get_mouse_downward_face()
         
         surface.blit(image, self.rect.topleft)
+
+    def draw_bear(self, surface):
+        if self.direction == "right":
+            image = self.animal_sprites.get_bear_right_face()
+        elif self.direction == "left":
+            image = self.animal_sprites.get_bear_left_face()
+        elif self.direction == "up":
+            image = self.animal_sprites.get_bear_upward_face()
+        elif self.direction == "down":
+            image = self.animal_sprites.get_bear_downward_face()
+        
+        surface.blit(image, self.rect.topleft)
+    

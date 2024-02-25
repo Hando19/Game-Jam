@@ -46,14 +46,6 @@ def init_game():
             new_object.rect.y = random.randint(100, screen_height - 100)
         objects.append(new_object)
 
-'''
-def add_bear():
-    global projectiles, bears
-    selected_projectile = random.choice(projectiles)
-    new_bear = Projectile(selected_projectile.start_pos, selected_projectile.direction, selected_projectile.speed, selected_projectile.range)
-    bears.append(new_bear)
-'''
-
 def add_bear():
     global projectiles, bears
     selected_projectile = random.choice(projectiles)
@@ -140,7 +132,7 @@ def trash_level():
             obj.draw(screen)
         
         for bear in bears:
-            bear.draw(screen)
+            bear.draw_bear(screen)
 
         # Display the score
         score_surface = font.render(f'Score: {collision_count}', True, pygame.Color('white'))

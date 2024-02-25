@@ -7,6 +7,7 @@ class AnimalSprites:
         self.animal_img_path = 'src/assets/AnimalAssets.png'
         self.insect_nest_img_path = 'src/assets/InsectNest.png'
         self.insect_img_path = 'src/assets/Insect.png'
+        self.bear_img_path = 'src/assets/Bear.png'
 
     #mouse sprites
     def get_mouse_right_face(self):
@@ -37,3 +38,16 @@ class AnimalSprites:
     
     def get_insect_downward_face(self):
         return pygame.transform.rotate(self.get_insect_left_face(), 90)
+    
+    #bear sprites
+    def get_bear_right_face(self):
+        return get_scaled_image(self.bear_img_path, projectile_dimentions)
+    
+    def get_bear_left_face(self):
+        return pygame.transform.flip(self.get_bear_right_face(), True, False)
+    
+    def get_bear_upward_face(self):
+        return pygame.transform.rotate(self.get_bear_right_face(), 90)
+    
+    def get_bear_downward_face(self):
+        return pygame.transform.rotate(self.get_bear_left_face(), 90)
