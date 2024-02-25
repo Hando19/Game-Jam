@@ -37,3 +37,8 @@ def get_scaled_image(img_path, scale):
         scaled_image = pygame.transform.scale(full_image, (scale, scale))
         
         return scaled_image
+
+# Function to create walls
+def create_wall(x, y, width, height):
+    """Creates a wall with the given parameters and returns the rect."""
+    return pygame.Rect(x, y, width, height)

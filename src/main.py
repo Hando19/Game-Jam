@@ -16,6 +16,7 @@ def main():
     pygame.display.set_caption("Chores")
 
     try:
+        #intro_screen()
         #mouse_infestation_screen()
         #house_level()
         trash_level()

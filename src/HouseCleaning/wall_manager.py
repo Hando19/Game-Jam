@@ -1,12 +1,6 @@
-import pygame
 from setup.game_setup import screen_height, screen_width, wall_dimentions
 from classes.houseSprites import HouseSprites
-from classes.animalSprites import AnimalSprites
-
-# Function to create walls
-def create_wall(x, y, width, height):
-    """Creates a wall with the given parameters and returns the rect."""
-    return pygame.Rect(x, y, width, height)
+from setup.util_functions import create_wall
 
 # Create walls
 walls = [ 

@@ -2,7 +2,7 @@ import pygame
 import sys
 import random
 
-from setup.game_setup import black, white, gray, red, dark_gray, screen_height, screen_width, screen, wall_dimentions
+from setup.game_setup import screen_height, screen_width, screen
 
 from setup.player import Player
 from classes.movableObject import MovableObject
@@ -10,6 +10,7 @@ from HouseCleaning.projectile_manager import projectiles
 from classes.projectile import Projectile
 from setup.util_functions import prepare_background
 from classes.houseSprites import HouseSprites
+from TakingTrashOut.trash_bin_wall import bin_walls, draw_bins
 
 # Initialize Pygame and font
 pygame.init()
@@ -70,7 +71,7 @@ def trash_level():
     init_game()
     
     bear_speed = 12
-    pit_rect = pygame.Rect(200, screen_height - wall_dimentions, 200, wall_dimentions)
+    pit_rect = bin_walls[0]
     pit_hitbox_rect = pygame.Rect(pit_rect.x, pit_rect.y, pit_rect.width, 10)
 
     running = True
@@ -121,8 +122,8 @@ def trash_level():
         # Draw the background first
         screen.blit(background, (0, 0))
 
-        # Draw the rest of the game elements
-        pygame.draw.rect(screen, dark_gray, (200, screen_height - 50, 200, 50))
+        draw_bins(screen)
+        
         player.draw(screen)
 
         for obj in objects:
