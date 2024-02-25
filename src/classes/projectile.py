@@ -40,8 +40,6 @@ class Projectile:
         self.distance_moved = 0
     
     def draw_insect(self, surface):
-
-        # Get the specific image based on direction
         if self.direction == "right":
             image = self.animal_sprites.get_insect_right_face()
         elif self.direction == "left":
@@ -54,8 +52,6 @@ class Projectile:
         surface.blit(image, self.rect.topleft)
 
     def draw_mice(self, surface):
-
-        # Get the specific image based on direction
         if self.direction == "right":
             image = self.animal_sprites.get_mouse_right_face()
         elif self.direction == "left":

@@ -59,6 +59,7 @@ def add_enemy_bullet():
     enemy_bullets.append(new_bullet)
 
 def pest_level():
+    global player, player_bullets, enemy_bullets, objects  # Ensure these are accessible globally
     init_game(player)
     
     running = True
@@ -79,13 +80,26 @@ def pest_level():
         keys = pygame.key.get_pressed()
         proposed_move = player.propose_move()
 
+        # Update player position if not colliding with objects
         if not any(proposed_move.colliderect(obj) for obj in objects):
             player.update_hitbox_rect(proposed_move)
 
+        # Check for collisions between player and nests
+        for obj in list(objects):  # Iterate over a copy of the list to safely remove items
+            if player.get_hitbox_rect().colliderect(obj):
+                objects.remove(obj)  # Remove the nest from the list
+
+        # Check if all nests are collected
+        if not objects:
+
+            running = False  # Or transition to the next level or state
+
+        # Player shooting bullets
         if keys[pygame.K_SPACE] and player_bullet_timer >= bullet_interval:
             add_player_bullet(player)
             player_bullet_timer = 0
 
+        # Enemy shooting bullets
         if enemy_bullet_timer >= enemy_bullet_interval:
             add_enemy_bullet()
             enemy_bullet_timer = 0
@@ -99,14 +113,27 @@ def pest_level():
         for bullet in player_bullets + enemy_bullets:
             bullet.update()
             bullet.draw_insect(screen)
-            if bullet.rect.x < 0 or bullet.rect.x > screen_width or bullet.rect.y > screen_height or bullet.rect.y < 0:
-                if bullet in player_bullets:
+            if bullet in enemy_bullets and bullet.rect.colliderect(player.get_hitbox_rect()):
+                init_game(player)  # Reset the game if the player is hit
+                break
+        
+        # Update and draw player bullets, check for collisions with nests
+        for bullet in player_bullets[:]:
+            bullet.update()
+            bullet.draw_insect(screen)
+            for obj in objects[:]:
+                if bullet.rect.colliderect(obj):
                     player_bullets.remove(bullet)
-                else:
-                    enemy_bullets.remove(bullet)
+                    objects.remove(obj)
+                    break
 
+        # Check if all nests are hit
+        if not objects:
+            running = False
+        
+        # Draw nests
         for obj in objects:
-            screen.blit(animal_sprites.get_insect_nest(), obj)
+            screen.blit(animal_sprites.get_insect_nest(), obj.topleft)
 
         player.draw(screen)
 
